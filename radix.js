@@ -1,0 +1,40 @@
+function radixSort(arr) {
+   
+    const maxDigitCount = getMaxDigitCount(arr);
+    
+
+    for (let k = 0; k < maxDigitCount; k++) {
+ 
+      const digitBuckets = Array.from({ length: 10 }, () => []);
+  
+  
+      for (let i = 0; i < arr.length; i++) {
+        const digit = getDigit(arr[i], k);
+        digitBuckets[digit].push(arr[i]);
+      }
+    
+      arr = [].concat(...digitBuckets);
+    }
+  
+    return arr;
+  }
+  
+
+  function getMaxDigitCount(arr) {
+    let maxDigits = 0;
+    for (let i = 0; i < arr.length; i++) {
+      maxDigits = Math.max(maxDigits, digitCount(arr[i]));
+    }
+    return maxDigits;
+  }
+
+  function digitCount(num) {
+    if (num === 0) return 1;
+    return Math.floor(Math.log10(Math.abs(num))) + 1;
+  }
+  function getDigit(num, place) {
+    return Math.floor(Math.abs(num) / Math.pow(10, place)) % 10;
+  }
+  
+  module.exports = radixSort;
+  
